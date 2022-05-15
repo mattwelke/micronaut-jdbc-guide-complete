@@ -7,14 +7,14 @@ import io.micronaut.data.annotation.MappedEntity;
 import javax.validation.constraints.NotNull;
 
 @MappedEntity
-public class Genre {
+public class View {
 
     @Id
     @GeneratedValue(GeneratedValue.Type.AUTO)
     private Long id;
 
     @NotNull
-    private String name;
+    private String productId;
 
     public Long getId() {
         return id;
@@ -24,19 +24,19 @@ public class Genre {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getProductId() {
+        return productId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 
     @Override
     public String toString() {
-        return "Genre{" +
+        return "View{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", productId='" + productId + '\'' +
                 '}';
     }
 }

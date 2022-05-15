@@ -1,6 +1,6 @@
 package example.micronaut;
 
-import example.micronaut.domain.Genre;
+import example.micronaut.domain.View;
 import io.micronaut.data.exceptions.DataAccessException;
 import io.micronaut.data.model.Pageable;
 import io.micronaut.http.HttpHeaders;
@@ -23,50 +23,50 @@ import java.util.List;
 import java.util.Optional;
 
 @ExecuteOn(TaskExecutors.IO)  
-@Controller("/genres")  
-public class GenreController {
+@Controller("/views")  
+public class ViewController {
 
-    protected final GenreRepository genreRepository;
+    protected final ViewRepository repository;
 
-    public GenreController(GenreRepository genreRepository) { 
-        this.genreRepository = genreRepository;
+    public ViewController(ViewRepository repository) { 
+        this.repository = repository;
     }
 
     @Get("/{id}") 
-    public Optional<Genre> show(Long id) {
-        return genreRepository
+    public Optional<View> show(Long id) {
+        return repository
                 .findById(id); 
     }
 
     @Put 
-    public HttpResponse<?> update(@Body @Valid GenreUpdateCommand command) { 
-        genreRepository.update(command.getId(), command.getName());
+    public HttpResponse<?> update(@Body @Valid ViewUpdateCommand command) { 
+        repository.update(command.getId(), command.getProductId());
         return HttpResponse
                 .noContent()
                 .header(HttpHeaders.LOCATION, location(command.getId()).getPath()); 
     }
 
     @Get("/list") 
-    public List<Genre> list(@Valid Pageable pageable) { 
-        return genreRepository.findAll(pageable).getContent();
+    public List<View> list(@Valid Pageable pageable) { 
+        return repository.findAll(pageable).getContent();
     }
 
     @Post 
-    public HttpResponse<Genre> save(@Body("name") @NotBlank String name) {
-        Genre genre = genreRepository.save(name);
+    public HttpResponse<View> save(@Body("name") @NotBlank String name) {
+        View view = repository.save(name);
 
         return HttpResponse
-                .created(genre)
-                .headers(headers -> headers.location(location(genre.getId())));
+                .created(view)
+                .headers(headers -> headers.location(location(view.getId())));
     }
 
     @Post("/ex") 
-    public HttpResponse<Genre> saveExceptions(@Body @NotBlank String name) {
+    public HttpResponse<View> saveExceptions(@Body @NotBlank String name) {
         try {
-            Genre genre = genreRepository.saveWithException(name);
+            View view = repository.saveWithException(name);
             return HttpResponse
-                    .created(genre)
-                    .headers(headers -> headers.location(location(genre.getId())));
+                    .created(view)
+                    .headers(headers -> headers.location(location(view.getId())));
         } catch(DataAccessException e) {
             return HttpResponse.noContent();
         }
@@ -75,14 +75,14 @@ public class GenreController {
     @Delete("/{id}") 
     @Status(HttpStatus.NO_CONTENT)
     public void delete(Long id) {
-        genreRepository.deleteById(id);
+        repository.deleteById(id);
     }
 
     protected URI location(Long id) {
-        return URI.create("/genres/" + id);
+        return URI.create("/views/" + id);
     }
 
-    protected URI location(Genre genre) {
-        return location(genre.getId());
+    protected URI location(View view) {
+        return location(view.getId());
     }
 }

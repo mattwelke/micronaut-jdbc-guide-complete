@@ -1,6 +1,6 @@
 package example.micronaut;
 
-import example.micronaut.domain.Genre;
+import example.micronaut.domain.View;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.data.annotation.Id;
 import io.micronaut.data.exceptions.DataAccessException;
@@ -13,15 +13,15 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @JdbcRepository(dialect = Dialect.MYSQL) 
-public interface GenreRepository extends PageableRepository<Genre, Long> { 
+public interface ViewRepository extends PageableRepository<View, Long> { 
 
-    Genre save(@NonNull @NotBlank String name);
+    View save(@NonNull @NotBlank String productId);
 
     @Transactional
-    default Genre saveWithException(@NonNull @NotBlank String name) {
-        save(name);
+    default View saveWithException(@NonNull @NotBlank String productId) {
+        save(productId);
         throw new DataAccessException("test exception");
     }
 
-    long update(@NonNull @NotNull @Id Long id, @NonNull @NotBlank String name);
+    long update(@NonNull @NotNull @Id Long id, @NonNull @NotBlank String productId);
 }
