@@ -1,6 +1,7 @@
 package example.micronaut;
 
 import example.micronaut.domain.View;
+import example.micronaut.dtos.PopularProductResult;
 import io.micronaut.data.exceptions.DataAccessException;
 import io.micronaut.data.model.Pageable;
 import io.micronaut.http.HttpHeaders;
@@ -49,6 +50,11 @@ public class ViewController {
     @Get("/list") 
     public List<View> list(@Valid Pageable pageable) { 
         return repository.findAll(pageable).getContent();
+    }
+
+    @Get("/popular") 
+    public List<PopularProductResult> popular() { 
+        return repository.popularViews();
     }
 
     @Post 
