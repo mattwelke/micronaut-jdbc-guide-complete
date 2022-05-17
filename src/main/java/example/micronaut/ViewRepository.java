@@ -29,6 +29,6 @@ public interface ViewRepository extends PageableRepository<View, Long> {
 
     long update(@NonNull @NotNull @Id Long id, @NonNull @NotBlank String productId);
 
-    @Query("SELECT product_id AS productId, COUNT(*) AS count FROM `view` GROUP BY productId ORDER BY count DESC")
+    @Query("SELECT product_id, COUNT(*) AS count FROM `view` GROUP BY product_id ORDER BY count DESC")
     List<PopularProductResult> popularViews();
 }
