@@ -6,24 +6,24 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Introspected 
-public class GenreUpdateCommand {
+public class ViewUpdateCommand {
     @NotNull
     private final Long id;
 
     @NotBlank
-    private final String name;
+    private final String productId;
 
-    public GenreUpdateCommand(Long id, String name) {
+    public ViewUpdateCommand(Long id, String productId) {
         this.id = id;
-        this.name = name;
+        this.productId = productId;
     }
 
     public Long getId() {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getProductId() {
+        return productId;
     }
 
 }
